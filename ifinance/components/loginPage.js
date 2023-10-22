@@ -20,7 +20,7 @@ const Login=()=>{
           <Text  style={styles.buttonText}>Login</Text>
          </TouchableOpacity>
           <TouchableOpacity>
-          <Text style={styles.registerLink}>Don't have an account? Register now</Text>
+          <Text style={styles.registerLink} onPress={() => navigation.navigate('registration')}>Don't have an account? Register now</Text>
           </TouchableOpacity>
         </View>
       );
@@ -58,7 +58,7 @@ const styles=StyleSheet.create({
     loginButton: {
         width: '80%',
         height: 40,
-        backgroundColor: '#7CB041',
+        backgroundColor: '#3C5074',
         borderRadius: 10,
       },
       buttonText: {
