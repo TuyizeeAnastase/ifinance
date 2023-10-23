@@ -10,6 +10,7 @@ import ContactScreen from '../static/ContactScreen';
 import WelcomePage from '../welcomePage';
 import HomeDashboard from '../dashboard/home';
 import Registration from '../registrationPage';
+import Login from '../loginPage';
 
 const DrawerNavigator = () => {
   return (
@@ -20,6 +21,36 @@ const DrawerNavigator = () => {
     options={{
       drawerLabel: 'Home',
       drawerIcon: ({ focused, color, size }) => (
+        <Icon name="info" size={size} color={color} />
+      ),
+    }}
+    />
+    <Drawer.Screen
+    name='login'
+    component={Login}
+    options={{
+      drawerLabel: 'Login',
+      drawerIcon: ({ color, size }) => (
+        <Icon name="info" size={size} color={color} />
+      ),
+    }}
+    />
+    <Drawer.Screen
+    name='registration'
+    component={Registration}
+    options={{
+      drawerLabel: 'Registration',
+      drawerIcon: ({ color, size }) => (
+        <Icon name="info" size={size} color={color} />
+      ),
+    }}
+    />
+    <Drawer.Screen
+    name='dashboard'
+    component={HomeDashboard}
+    options={{
+      drawerLabel: 'Dashboard',
+      drawerIcon: ({ color, size }) => (
         <Icon name="info" size={size} color={color} />
       ),
     }}
