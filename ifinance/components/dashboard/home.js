@@ -3,6 +3,7 @@ import {View,Text,FlatList,ScrollView,StyleSheet,Button,TouchableOpacity} from '
 import Loan from "./cards/loan";
 import Investor from "./cards/investor";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import BorrowPopup from "./models/Borrow";
 
 const data=[
     {
@@ -48,7 +49,20 @@ const data=[
 
 
 const HomeDashboard=()=>{
+  const [isPopupVisible, setPopupVisible] = useState(true);
+  const [borrowedValue, setBorrowedValue] = useState('');
+
+  // const handleBorrow = (value) => {
+  //   setBorrowedValue(value);
+  //   setPopupVisible(false);
+  // };
+
+  const handleCancel = () => {
+    setPopupVisible(false);
+  };
+
     return(
+      <View>
         <View style={styles.container}>
         <View style={styles.userContainer}>
         <View style={styles.row}>
@@ -77,9 +91,13 @@ const HomeDashboard=()=>{
         </View>
       </View>
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={() => setPopupVisible(true)} style={styles.button}>
       <Text style={styles.buttonText}>Borrow</Text>
       </TouchableOpacity>
+      <BorrowPopup
+        isVisible={isPopupVisible}
+        onCancel={handleCancel}
+      />
       <TouchableOpacity style={styles.button}>
       <Text style={styles.buttonText}>Invest</Text>
       </TouchableOpacity>
@@ -136,6 +154,7 @@ const HomeDashboard=()=>{
           </ScrollView>
         </View>
       </ScrollView>
+    </View>
     </View>
     )
 }
@@ -270,6 +289,7 @@ const styles = StyleSheet.create({
       flex: 1,
       textAlign: 'center',
     },
+    
   });
 
 export default HomeDashboard
