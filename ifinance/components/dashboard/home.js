@@ -1,8 +1,9 @@
 import React,{useState} from "react";
-import {View,Text,FlatList,ScrollView,StyleSheet,Button,TouchableOpacity} from 'react-native'
+import {View,Text,FlatList,ScrollView,StyleSheet,Button,TouchableOpacity,TextInput} from 'react-native'
 import Loan from "./cards/loan";
 import Investor from "./cards/investor";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Modal from 'react-modal';
 
 const data=[
     {
@@ -48,6 +49,25 @@ const data=[
 
 
 const HomeDashboard=()=>{
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [investAmount, setInvestAmount] = useState('');
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleInvest = () => {
+    // Handle the investment logic here
+    // For example, you can send the investAmount to a server.
+    console.log('Investing:', investAmount);
+    closeModal();
+  };
+
     return(
         <View style={styles.container}>
         <View style={styles.userContainer}>
@@ -80,7 +100,7 @@ const HomeDashboard=()=>{
       <TouchableOpacity style={styles.button}>
       <Text style={styles.buttonText}>Borrow</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={openModal}>
       <Text style={styles.buttonText}>Invest</Text>
       </TouchableOpacity>
       </View>
@@ -136,6 +156,25 @@ const HomeDashboard=()=>{
           </ScrollView>
         </View>
       </ScrollView>
+      <Modal visible={isModalVisible} transparent animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Enter Investment Amount:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Amount"
+              value={investAmount}
+              onChangeText={(text) => setInvestAmount(text)}
+            />
+            <TouchableOpacity style={styles.modalButton} onPress={handleInvest}>
+              <Text style={styles.buttonText}>Confirm</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
+              <Text style={styles.buttonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
     )
 }
@@ -269,6 +308,44 @@ const styles = StyleSheet.create({
       padding: 13,
       flex: 1,
       textAlign: 'center',
+    },
+    investButton: {
+      backgroundColor: 'blue',
+      padding: 10,
+      borderRadius: 5,
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 18,
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    },
+    modalContent: {
+      width: 300,
+      padding: 20,
+      backgroundColor: 'white',
+      borderRadius: 10,
+    },
+    modalText: {
+      fontSize: 18,
+      marginBottom: 10,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: 'gray',
+      padding: 10,
+      marginBottom: 10,
+    },
+    modalButton: {
+      backgroundColor: 'blue',
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      margin: 5,
     },
   });
 
