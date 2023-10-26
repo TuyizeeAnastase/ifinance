@@ -49,13 +49,13 @@ const data=[
 
 
 const HomeDashboard=()=>{
-  const [isPopupVisible, setPopupVisible] = useState(true);
+  const [isPopupVisible, setPopupVisible] = useState(false);
   const [borrowedValue, setBorrowedValue] = useState('');
 
-  // const handleBorrow = (value) => {
-  //   setBorrowedValue(value);
-  //   setPopupVisible(false);
-  // };
+  const handleBorrow = (value) => {
+    setBorrowedValue(value);
+    setPopupVisible(false);
+  };
 
   const handleCancel = () => {
     setPopupVisible(false);
@@ -94,10 +94,6 @@ const HomeDashboard=()=>{
       <TouchableOpacity onPress={() => setPopupVisible(true)} style={styles.button}>
       <Text style={styles.buttonText}>Borrow</Text>
       </TouchableOpacity>
-      <BorrowPopup
-        isVisible={isPopupVisible}
-        onCancel={handleCancel}
-      />
       <TouchableOpacity style={styles.button}>
       <Text style={styles.buttonText}>Invest</Text>
       </TouchableOpacity>
@@ -155,13 +151,18 @@ const HomeDashboard=()=>{
         </View>
       </ScrollView>
     </View>
+    <View style={styles.centeredPopup}>
+    <BorrowPopup
+      isVisible={isPopupVisible}
+      onCancel={handleCancel}
+    />
+    </View>
     </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#fff',
@@ -196,6 +197,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       marginTop: 10,
       color:'#7CB041'
+    },
+    centeredPopup: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     title: {
       fontSize: 24,

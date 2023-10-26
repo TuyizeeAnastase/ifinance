@@ -6,12 +6,12 @@ const BorrowPopup = ({ isVisible, onCancel }) => {
   const [showInfo,setShowInfo]=useState(false)
 
   const handleBorrow = () => {
-    // setInputValue('');
     setShowInfo(true)
+    setInputValue('');
   };
 
   return (
-    <Modal style={styles.modalContent} visible={isVisible} transparent animationType="slide">
+    <Modal style={styles.modal_Content} visible={isVisible} transparent animationType="slide">
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.title}>Enter the quantity:</Text>
@@ -73,9 +73,9 @@ const BorrowPopup = ({ isVisible, onCancel }) => {
 };
 
 const styles = StyleSheet.create({
-  modalContent:{
+  modal_Content:{
     position:'absolute',
-    zIndex:1000
+    zIndex:1
   },
     container: {
       flex: 1,
@@ -108,11 +108,10 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-evenly',
+      justifyContent: 'space-between',
       padding:16,
       width:100,
       borderRadius:5,
-      marginLeft:33
     },
     button:{
       width: 100,
