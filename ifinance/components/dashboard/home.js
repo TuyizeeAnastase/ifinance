@@ -4,6 +4,8 @@ import Loan from "./cards/loan";
 import Investor from "./cards/investor";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-modal';
+import BorrowPopup from "./models/Borrow";
+import InvestPopup from "./models/Invest";
 
 const data=[
     {
@@ -49,9 +51,9 @@ const data=[
 
 
 const HomeDashboard=()=>{
-
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [investAmount, setInvestAmount] = useState('');
+  const [isIvestVisible, setModalVisible] = useState(false);
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [borrowedValue, setBorrowedValue] = useState('');
 
   const openModal = () => {
     setModalVisible(true);
@@ -59,16 +61,22 @@ const HomeDashboard=()=>{
 
   const closeModal = () => {
     setModalVisible(false);
+    setModalVisible(false)
   };
 
-  const handleInvest = () => {
-    // Handle the investment logic here
-    // For example, you can send the investAmount to a server.
-    console.log('Investing:', investAmount);
-    closeModal();
+  
+  const handleBorrow = (value) => {
+    setBorrowedValue(value);
+    setPopupVisible(false);
+  };
+
+  const handleCancel = () => {
+    setPopupVisible(false);
+    setModalVisible(false)
   };
 
     return(
+      <View>
         <View style={styles.container}>
         <View style={styles.userContainer}>
         <View style={styles.row}>
@@ -97,7 +105,7 @@ const HomeDashboard=()=>{
         </View>
       </View>
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={() => setPopupVisible(true)} style={styles.button}>
       <Text style={styles.buttonText}>Borrow</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={openModal}>
@@ -156,32 +164,24 @@ const HomeDashboard=()=>{
           </ScrollView>
         </View>
       </ScrollView>
-      <Modal visible={isModalVisible} transparent animationType="slide">
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Enter Investment Amount:</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Amount"
-              value={investAmount}
-              onChangeText={(text) => setInvestAmount(text)}
-            />
-            <TouchableOpacity style={styles.modalButton} onPress={handleInvest}>
-              <Text style={styles.buttonText}>Confirm</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
-              <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      
+    </View>
+    <View style={styles.centeredPopup}>
+    <BorrowPopup
+      isVisible={isPopupVisible}
+      onCancel={handleCancel}
+    />
+    <InvestPopup 
+    isVisible={isIvestVisible}
+    onCancel={handleCancel}
+     />
+    </View>
     </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#fff',
@@ -216,6 +216,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       marginTop: 10,
       color:'#7CB041'
+    },
+    centeredPopup: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     title: {
       fontSize: 24,
@@ -272,6 +277,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center',
       lineHeight: 40,
+      marginLeft:4
     },
     scrollview: {
       width: '100%',
@@ -309,11 +315,6 @@ const styles = StyleSheet.create({
       flex: 1,
       textAlign: 'center',
     },
-    investButton: {
-      backgroundColor: 'blue',
-      padding: 10,
-      borderRadius: 5,
-    },
     buttonText: {
       color: 'white',
       fontSize: 18,
@@ -347,6 +348,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       margin: 5,
     },
+    
   });
 
 export default HomeDashboard
