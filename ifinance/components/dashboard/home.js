@@ -1,9 +1,11 @@
 import React,{useState} from "react";
-import {View,Text,FlatList,ScrollView,StyleSheet,Button,TouchableOpacity} from 'react-native'
+import {View,Text,FlatList,ScrollView,StyleSheet,Button,TouchableOpacity,TextInput} from 'react-native'
 import Loan from "./cards/loan";
 import Investor from "./cards/investor";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Modal from 'react-modal';
 import BorrowPopup from "./models/Borrow";
+import InvestPopup from "./models/Invest";
 
 const data=[
     {
@@ -49,9 +51,20 @@ const data=[
 
 
 const HomeDashboard=()=>{
+  const [isIvestVisible, setModalVisible] = useState(false);
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [borrowedValue, setBorrowedValue] = useState('');
 
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setModalVisible(false)
+  };
+
+  
   const handleBorrow = (value) => {
     setBorrowedValue(value);
     setPopupVisible(false);
@@ -59,6 +72,7 @@ const HomeDashboard=()=>{
 
   const handleCancel = () => {
     setPopupVisible(false);
+    setModalVisible(false)
   };
 
     return(
@@ -94,7 +108,7 @@ const HomeDashboard=()=>{
       <TouchableOpacity onPress={() => setPopupVisible(true)} style={styles.button}>
       <Text style={styles.buttonText}>Borrow</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={openModal}>
       <Text style={styles.buttonText}>Invest</Text>
       </TouchableOpacity>
       </View>
@@ -150,12 +164,17 @@ const HomeDashboard=()=>{
           </ScrollView>
         </View>
       </ScrollView>
+      
     </View>
     <View style={styles.centeredPopup}>
     <BorrowPopup
       isVisible={isPopupVisible}
       onCancel={handleCancel}
     />
+    <InvestPopup 
+    isVisible={isIvestVisible}
+    onCancel={handleCancel}
+     />
     </View>
     </View>
     )
@@ -258,6 +277,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center',
       lineHeight: 40,
+      marginLeft:4
     },
     scrollview: {
       width: '100%',
@@ -294,6 +314,39 @@ const styles = StyleSheet.create({
       padding: 13,
       flex: 1,
       textAlign: 'center',
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 18,
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    },
+    modalContent: {
+      width: 300,
+      padding: 20,
+      backgroundColor: 'white',
+      borderRadius: 10,
+    },
+    modalText: {
+      fontSize: 18,
+      marginBottom: 10,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: 'gray',
+      padding: 10,
+      marginBottom: 10,
+    },
+    modalButton: {
+      backgroundColor: 'blue',
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      margin: 5,
     },
     
   });
